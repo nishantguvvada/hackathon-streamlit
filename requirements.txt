@@ -3,3 +3,5 @@ numpy
 pandas
 pydeck
 streamlit
+replicate
+transformers==4.39.0
