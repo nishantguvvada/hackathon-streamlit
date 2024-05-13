@@ -1,7 +1,5 @@
-# Welcome to streamlit
+# Welcome to Arctic Bot
 
-This is the app you get when you run `streamlit hello`, extracted as its own app.
+Using the LLMs to serve the small business owners.
 
-Edit [Hello.py](./Hello.py) to customize this app to your heart's desire. ❤️
-
-Check it out on [Streamlit Community Cloud](https://st-hello-app.streamlit.app/)
+Edit [Hello.py](./Hello.py) to customize this app your desire.
