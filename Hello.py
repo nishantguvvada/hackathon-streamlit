@@ -38,7 +38,7 @@ def run():
         top_p = st.sidebar.slider('top_p', min_value=0.01, max_value=1.0, value=0.9, step=0.01)
 
     # Display introduction
-    st.title(":blue[AI-den]")
+    st.title("        :blue[AI-den]")
     st.title("Your personal den of knowledge!")
     st.write("Select one of the options from the sidebar dropdown to active the modes!")
 
