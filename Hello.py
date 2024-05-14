@@ -11,7 +11,7 @@ def run():
     icons = {"assistant": "./Snowflake_Logomark_blue.svg", "user": "⛷️"}
 
     # App title
-    st.set_page_config(page_title="Snowflake Arctic")
+    st.set_page_config(page_title="AI-den")
 
     # Replicate Credentials
     with st.sidebar:
@@ -36,6 +36,10 @@ def run():
         st.subheader("Adjust model parameters")
         temperature = st.sidebar.slider('temperature', min_value=0.01, max_value=5.0, value=0.3, step=0.01)
         top_p = st.sidebar.slider('top_p', min_value=0.01, max_value=1.0, value=0.9, step=0.01)
+
+    # Display introduction
+    st.title(":blue[AI-den] - Your personal den of knowledge!")
+    st.write("Select one of the options from the sidebar dropdown to active the modes!")
 
     # Store LLM-generated responses
     if "messages" not in st.session_state.keys():
