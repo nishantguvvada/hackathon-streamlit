@@ -1,17 +1,3 @@
-# Copyright (c) Streamlit Inc. (2018-2022) Snowflake Inc. (2022)
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-
 import streamlit as st
 import replicate
 import os
@@ -20,35 +6,7 @@ from streamlit.logger import get_logger
 
 LOGGER = get_logger(__name__)
 
-
 def run():
-    # st.set_page_config(
-    #     page_title="Hello",
-    #     page_icon="👋",
-    # )
-
-    # st.write("# Welcome to Streamlit! 👋")
-
-    # st.sidebar.success("Select a demo above.")
-
-    # st.markdown(
-    #     """
-    #     Streamlit is an open-source app framework built specifically for
-    #     Machine Learning and Data Science projects.
-    #     **👈 Select a demo from the sidebar** to see some examples
-    #     of what Streamlit can do!
-    #     ### Want to learn more?
-    #     - Check out [streamlit.io](https://streamlit.io)
-    #     - Jump into our [documentation](https://docs.streamlit.io)
-    #     - Ask a question in our [community
-    #       forums](https://discuss.streamlit.io)
-    #     ### See more complex demos
-    #     - Use a neural net to [analyze the Udacity Self-driving Car Image
-    #       Dataset](https://github.com/streamlit/demo-self-driving)
-    #     - Explore a [New York City rideshare dataset](https://github.com/streamlit/demo-uber-nyc-pickups)
-    # """
-    # )
-
     # Set assistant icon to Snowflake logo
     icons = {"assistant": "./Snowflake_Logomark_blue.svg", "user": "⛷️"}
 
@@ -57,7 +15,8 @@ def run():
 
     # Replicate Credentials
     with st.sidebar:
-        st.title('Snowflake Arctic')
+        st.title("Snowflake Arctic's - (AI)den")
+        st.caption("Your personal AI-assisted den")
         if 'REPLICATE_API_TOKEN' in st.secrets:
             replicate_api = st.secrets['REPLICATE_API_TOKEN']
         else:
@@ -67,13 +26,20 @@ def run():
                 st.markdown("**Don't have an API token?** Head over to [Replicate](https://replicate.com) to sign up for one.")
 
         os.environ['REPLICATE_API_TOKEN'] = replicate_api
+        option = st.selectbox(
+            "Select the mode for use-specific responses",
+            ("Homework", "Business", "Curiosity", "Games"),
+            index=None,
+            placeholder="Select a mode",
+        )
+        st.write("You selected:", option)
         st.subheader("Adjust model parameters")
         temperature = st.sidebar.slider('temperature', min_value=0.01, max_value=5.0, value=0.3, step=0.01)
         top_p = st.sidebar.slider('top_p', min_value=0.01, max_value=1.0, value=0.9, step=0.01)
 
     # Store LLM-generated responses
     if "messages" not in st.session_state.keys():
-        st.session_state.messages = [{"role": "assistant", "content": "Hi. I'm Arctic, a new, efficient, intelligent, and truly open language model created by Snowflake AI Research. Ask me anything."}]
+        st.session_state.messages = [{"role": "assistant", "content": "Hi. I'm AI-den. Ask me anything."}]
 
     # Display or clear chat messages
     for message in st.session_state.messages:
@@ -81,7 +47,7 @@ def run():
             st.write(message["content"])
 
     def clear_chat_history():
-        st.session_state.messages = [{"role": "assistant", "content": "Hi. I'm Arctic, a new, efficient, intelligent, and truly open language model created by Snowflake AI Research. Ask me anything."}]
+        st.session_state.messages = [{"role": "assistant", "content": "Hi. I'm AI-den. Ask me anything."}]
 
     st.sidebar.button('Clear chat history', on_click=clear_chat_history)
     st.sidebar.caption('Built by [Snowflake](https://snowflake.com/) to demonstrate [Snowflake Arctic](https://www.snowflake.com/blog/arctic-open-and-efficient-foundation-language-models-snowflake). App hosted on [Streamlit Community Cloud](https://streamlit.io/cloud). Model hosted by [Replicate](https://replicate.com/snowflake/snowflake-arctic-instruct).')
@@ -105,6 +71,16 @@ def run():
         prompt = []
         for dict_message in st.session_state.messages:
             if dict_message["role"] == "user":
+                if option == "Homework":
+                    prompt.append("Answer in atleast 500 words in a structured format consisting of sections named 'Introduction', 'What', 'Why', 'How', 'Advantages' and 'Disadvantages'\n")
+                elif option == "Business":
+                    prompt.append("The user is a business owner. Answer in atleast 200 in a structured format consisting of sections named 'Introduction', 'What', 'Why', 'How', 'Feasibility', 'Pros' and 'Cons' to give the business owner insights and make a business decision. Include any possible legal complications.\n")
+                elif option == "Curiosity":
+                    prompt.append("Answer as if explaining to a 5th grade student, with examples\n")
+                elif option == "Games":
+                    prompt.append("Answer in 10 words. In the next line, add a quiz question related to the answer.\n")
+                else:
+                    prompt.append("\n")
                 prompt.append("<|im_start|>user\n" + dict_message["content"] + "<|im_end|>")
             else:
                 prompt.append("<|im_start|>assistant\n" + dict_message["content"] + "<|im_end|>")
