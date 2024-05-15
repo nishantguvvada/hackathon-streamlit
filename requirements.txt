@@ -4,4 +4,4 @@ pandas
 pydeck
 streamlit
 replicate
-transformers==4.39.0
+transformers==4.40.2
