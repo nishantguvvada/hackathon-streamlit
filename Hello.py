@@ -60,7 +60,7 @@ def run():
         """Get a tokenizer to make sure we're not sending too much text
         text to the Model. Eventually we will replace this with ArcticTokenizer
         """
-        return AutoTokenizer.from_pretrained("huggyllama/llama-7b")
+        return AutoTokenizer.from_pretrained("snowflake/snowflake-arctic-instruct")
 
     def get_num_tokens(prompt):
         """Get the number of tokens in a given prompt"""
