@@ -60,7 +60,8 @@ def run():
         """Get a tokenizer to make sure we're not sending too much text
         text to the Model. Eventually we will replace this with ArcticTokenizer
         """
-        return AutoTokenizer.from_pretrained("Snowflake/snowflake-arctic-instruct", trust_remote_code=True, revision="refs/pr/3")
+        return AutoTokenizer.from_pretrained('Snowflake/snowflake-arctic-embed-l')
+        # AutoTokenizer.from_pretrained("Snowflake/snowflake-arctic-instruct", trust_remote_code=True, revision="refs/pr/3")
         # AutoTokenizer.from_pretrained("snowflake/snowflake-arctic-instruct", trust_remote_code=True) 
 
     def get_num_tokens(prompt):
